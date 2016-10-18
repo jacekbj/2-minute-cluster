@@ -1,7 +1,7 @@
 """
 Task for calling gcloud.
 """
-from fabric.api import task, require
+from fabric.api import task, require, local
 
 
 @task
@@ -23,7 +23,17 @@ def create_cluster(cluster_name):
     :param str cluster_name: name of cluster to create
     :return: None
     """
-    raise NotImplementedError
+    command = (
+        'gcloud dataproc clusters create'
+        ' {}'
+        ' --num-workers 4'
+        ' --master-machine-type n1-standard-1'
+        ' --worker-machine-type n1-standard-1'
+        ' --num-master-local-ssds 0'
+        ' --num-worker-local-ssds 0'
+        ' --zone europe-west1-b'.format(cluster_name)
+    )
+    local(command)
 
 
 @task
@@ -34,15 +44,16 @@ def delete_cluster(cluster_name):
     :param str cluster_name: name of cluster to delete
     :return: None
     """
-    raise NotImplementedError
+    local('gcloud --quiet dataproc clusters delete {}'.format(cluster_name))
 
 
 @task
-def upload_data_files():
+def upload_data_files(storage_name):
     """
     Runs gcloud to upload data files from env.data_files_dir
     to cloud storage.
 
+    :type str storage_name: cloud storage name
     :return: None
     """
     require('data_files_dir')
@@ -50,11 +61,12 @@ def upload_data_files():
 
 
 @task
-def upload_source_files():
+def upload_source_files(storage_name):
     """
     Runs gcloud to upload source files from env.data_files_dir
     to cloud storage.
 
+    :type str storage_name: cloud storage name
     :return: None
     """
     require('source_files_dir')
