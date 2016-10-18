@@ -1,7 +1,9 @@
 """
 Task for calling gcloud.
 """
-from fabric.api import task, require, local
+import json
+
+from fabric.api import task, require, local, env
 
 
 @task
@@ -12,7 +14,10 @@ def read_config(path):
     :param str path: path to configuration file
     :return: None
     """
-    raise NotImplementedError
+    with open(path, 'r') as f:
+        config = json.loads(f.read())
+        env['data_files_dir'] = config['data_files_dir']
+        env['source_files_dir'] = config['source_files_dir']
 
 
 @task

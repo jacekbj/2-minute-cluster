@@ -87,4 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Data files
 /data/
+
+# Sensitive settings
+config.json
