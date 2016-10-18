@@ -62,7 +62,9 @@ def upload_data_files(storage_name):
     :return: None
     """
     require('data_files_dir')
-    raise NotImplementedError
+    local('gsutil -m cp {}/* gs://{}/data'.format(
+        env.data_files_dir, storage_name)
+    )
 
 
 @task
@@ -75,7 +77,9 @@ def upload_source_files(storage_name):
     :return: None
     """
     require('source_files_dir')
-    raise NotImplementedError
+    local('gsutil -m cp {}/* gs://{}/src'.format(
+        env.source_files_dir, storage_name)
+    )
 
 
 def run_log_analysis(cluster_name):
