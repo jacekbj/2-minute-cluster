@@ -95,3 +95,12 @@ def run_log_analysis(cluster_name):
     :return:
     """
     raise NotImplementedError
+
+
+@task
+def run_locally():
+    local(
+        'docker-compose -f docker-compose.yml -f local.yml run'
+        ' -T --rm --name spark_standalone spark_standalone'
+        ' /spark/bin/spark-submit /src/main.py local'
+    )
