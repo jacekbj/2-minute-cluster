@@ -7,6 +7,11 @@ from fabric.api import task, require, local, env
 
 
 @task
+def build_image():
+    local('docker build -t spark_standalone:latest .')
+
+
+@task
 def read_config(path):
     """
     Read configuration from JSON file and fill in env variable.
