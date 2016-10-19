@@ -93,3 +93,6 @@ ENV/
 
 # Sensitive settings
 config.json
+
+# Local settings
+local.yml

@@ -1,0 +1,10 @@
+spark_standalone:
+  image: spark_standalone:latest
+  environment:
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/spark/bin
+  expose:
+    - "4444"
+#  Use cpuset to control which core is dedicated to Docker container
+#  By default, container uses all host's resources
+  cpuset: "0,1"
+  mem_limit: "4gb"
