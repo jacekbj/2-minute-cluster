@@ -16,4 +16,3 @@ RUN mkdir /src
 ADD src/ /src
 
 RUN mkdir /data
-ADD data/ /data
