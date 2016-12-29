@@ -6,6 +6,9 @@ import json
 from fabric.api import task, require, local, env
 
 
+DEFAULT_CLUSTER_NAME = '2-minute-cluster'
+
+
 @task
 def build_image():
     local('docker build -t spark_standalone:latest .')
@@ -104,3 +107,25 @@ def run_locally():
         ' -T --rm --name spark_standalone spark_standalone'
         ' /spark/bin/spark-submit /src/main.py local'
     )
+
+
+@task
+def create_cluster(cluster_name=DEFAULT_CLUSTER_NAME, workers='8'):
+    command_parts = (
+        'gcloud dataproc clusters create',
+        '{}'.format(cluster_name),
+        '--num-preemptible-workers 0',
+        '--num-workers {}'.format(workers),
+        '--master-machine-type n1-highmem-2',
+        '--worker-machine-type n1-standard-1',
+        '--num-master-local-ssds 0',
+        '--num-worker-local-ssds 0',
+        '--zone europe-west1-b'
+    )
+    command = ' '.join(command_parts)
+    local(command)
+
+
+@task
+def delete_cluster(cluster_name=DEFAULT_CLUSTER_NAME):
+    local('gcloud --quiet dataproc clusters delete {}'.format(cluster_name))
