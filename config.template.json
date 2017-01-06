@@ -1,4 +1,6 @@
 {
   "data_files_dir": "<PATH TO DATA FILES DIR>",
-  "source_files_dir": "<PATH TO SOURCE FILES DIR>"
+  "source_files_dir": "<PATH TO SOURCE FILES DIR>",
+  "storage_name": "<STORAGE NAME>",
+  "cluster_name": "<CLUSTER NAME>"
 }
