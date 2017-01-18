@@ -62,11 +62,11 @@ if __name__ == '__main__':
             agent = regex.search(line).group('user_agent')
         except AttributeError:
             agent = 'unknown'
-        return agent, 1
+        return agent
 
     user_agents_count = log.map(
         get_user_agent
-    ).countByKey(
+    ).countByValue(
     ).items()
     user_agents_count = sorted(user_agents_count, key=lambda x: -x[1])
 
